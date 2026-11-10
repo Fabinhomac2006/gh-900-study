@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Questões{% endblock %}
+{% block page %}quiz{% endblock %}
+{% block content %}
+<h1>Questões de treino</h1>
+
+<section class="card" id="quiz-setup">
+  <form id="setup-form" class="form-grid">
+    <label>Tópico
+      <select id="quiz-topic" name="topico">
+        <option value="">Todos ({{ total }})</option>
+        {% for topic in all_topics %}
+        <option value="{{ topic.slug }}">{{ topic.title }} ({{ counts[topic.slug].questions }})</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Quantidade
+      <input type="number" id="quiz-size" min="1" max="50" value="10">
+    </label>
+    <label>Modo
+      <select id="quiz-mode">
+        <option value="practice">Prática — feedback a cada questão</option>
+        <option value="exam">Simulado — correção só no final</option>
+      </select>
+    </label>
+    <div class="actions">
+      <button class="btn primary" type="submit">Começar</button>
+      <button class="btn" type="button" id="retry-wrong" hidden>Refazer meus erros</button>
+    </div>
+  </form>
+  <p class="error" id="setup-error" role="alert" hidden></p>
+</section>
+
+<section id="quiz-run" hidden>
+  <div class="quiz-head">
+    <span id="quiz-progress"></span>
+    <span class="tag" id="quiz-tag"></span>
+  </div>
+  <div class="card">
+    <h2 id="question-text"></h2>
+    <p class="muted" id="question-hint"></p>
+    <form id="options" class="options"></form>
+    <div class="feedback" id="feedback" role="status" hidden></div>
+  </div>
+  <div class="actions">
+    <button class="btn" id="btn-prev" type="button">← Anterior</button>
+    <button class="btn primary" id="btn-check" type="button">Verificar</button>
+    <button class="btn primary" id="btn-next" type="button">Próxima →</button>
+    <button class="btn primary" id="btn-finish" type="button">Finalizar</button>
+  </div>
+</section>
+
+<section id="quiz-result" hidden>
+  <div class="card">
+    <h2 id="result-title"></h2>
+    <p id="result-summary"></p>
+    <h3>Por tópico</h3>
+    <ul id="result-topics"></ul>
+    <h3>Revisão</h3>
+    <ol id="result-review" class="review"></ol>
+    <div class="actions">
+      <button class="btn primary" id="btn-restart" type="button">Nova rodada</button>
+    </div>
+  </div>
+</section>
+{% endblock %}

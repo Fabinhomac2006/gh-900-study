@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Cartões{% endblock %}
+{% block page %}flashcards{% endblock %}
+{% block content %}
+<h1>Cartões de memorização</h1>
+<div class="toolbar">
+  <label>Tópico
+    <select id="card-topic">
+      <option value="">Todos</option>
+      {% for topic in all_topics %}<option value="{{ topic.slug }}">{{ topic.title }}</option>{% endfor %}
+    </select>
+  </label>
+  <label class="check"><input type="checkbox" id="card-pending"> Ocultar dominados</label>
+  <button class="btn" id="card-shuffle" type="button">Embaralhar</button>
+</div>
+
+<p class="muted" id="card-counter" aria-live="polite"></p>
+<button class="flashcard" id="flashcard" type="button" aria-live="polite">
+  <span class="label" id="card-label">Termo</span>
+  <span class="text" id="card-text"></span>
+</button>
+<p class="muted center">Clique no cartão (ou use <kbd>Espaço</kbd>) para virar · <kbd>←</kbd> <kbd>→</kbd> para navegar</p>
+
+<div class="actions center">
+  <button class="btn" id="card-prev" type="button">← Anterior</button>
+  <button class="btn" id="card-review" type="button">Revisar de novo</button>
+  <button class="btn primary" id="card-known" type="button">Já sei ✓</button>
+  <button class="btn" id="card-next" type="button">Próximo →</button>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}GH-900 Study{% endblock %} · GH-900 Study</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body data-page="{% block page %}{% endblock %}">
+  <header class="site-header">
+    <a class="brand" href="{{ url_for('index') }}">🐙 GH-900 <span>Study</span></a>
+    <nav aria-label="Principal">
+      <a href="{{ url_for('topics') }}">Tópicos</a>
+      <a href="{{ url_for('flashcards') }}">Cartões</a>
+      <a href="{{ url_for('quiz') }}">Questões</a>
+    </nav>
+  </header>
+  <main>{% block content %}{% endblock %}</main>
+  <footer class="site-footer">
+    Material de estudo independente e não oficial, com conteúdo e questões autorais.
+    Consulte o <a href="{{ study_guide_url }}" target="_blank" rel="noopener noreferrer">guia oficial do GH-900</a>.
+  </footer>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

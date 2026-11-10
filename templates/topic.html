@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ topic.title }}{% endblock %}
+{% block page %}topic{% endblock %}
+{% block content %}
+<article data-topic="{{ topic.slug }}" id="topic">
+  <p class="crumbs"><a href="{{ url_for('topics') }}">← Tópicos</a></p>
+  <h1><span aria-hidden="true">{{ topic.icon }}</span> {{ topic.title }}</h1>
+  <p class="lead">{{ topic.summary }}</p>
+
+  {% for section in topic.sections %}
+  <section class="card section">
+    <h2>{{ section.heading }}</h2>
+    <ul>
+      {% for point in section.points %}<li>{{ point|inline }}</li>{% endfor %}
+    </ul>
+  </section>
+  {% endfor %}
+
+  <section class="card section">
+    <h2>Documentação oficial</h2>
+    <ul>
+      {% for label, url in topic.links %}
+      <li><a href="{{ url }}" target="_blank" rel="noopener noreferrer">{{ label }}</a></li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <div class="actions">
+    <button class="btn primary" id="mark-read" type="button">Marcar como lido</button>
+    <a class="btn" href="{{ url_for('quiz', topico=topic.slug) }}">Praticar este tópico ({{ counts.questions }})</a>
+    <a class="btn" href="{{ url_for('flashcards', topico=topic.slug) }}">Cartões ({{ counts.cards }})</a>
+  </div>
+
+  <nav class="pager" aria-label="Navegação entre tópicos">
+    {% if previous %}<a href="{{ url_for('topic_detail', slug=previous.slug) }}">← {{ previous.title }}</a>{% else %}<span></span>{% endif %}
+    {% if following %}<a href="{{ url_for('topic_detail', slug=following.slug) }}">{{ following.title }} →</a>{% endif %}
+  </nav>
+</article>
+{% endblock %}

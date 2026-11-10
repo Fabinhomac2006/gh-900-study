@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Tópicos{% endblock %}
+{% block content %}
+<h1>Tópicos</h1>
+<p class="lead">Os sete domínios cobertos neste material. Confirme os pesos e habilidades atuais no guia oficial.</p>
+<div class="grid">
+  {% for topic in all_topics %}
+  <a class="card topic-card" href="{{ url_for('topic_detail', slug=topic.slug) }}">
+    <span class="icon" aria-hidden="true">{{ topic.icon }}</span>
+    <h3>{{ loop.index }}. {{ topic.title }}</h3>
+    <p>{{ topic.summary }}</p>
+    <small>{{ counts[topic.slug].questions }} questões · {{ counts[topic.slug].cards }} cartões</small>
+  </a>
+  {% endfor %}
+</div>
+{% endblock %}

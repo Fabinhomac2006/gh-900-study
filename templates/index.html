@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Início{% endblock %}
+{% block page %}index{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Estude para o <strong>GH-900</strong> — GitHub Foundations</h1>
+  <p>Resumos por domínio, cartões de memorização e {{ total_questions }} questões de treino com explicação.
+     Seu progresso fica salvo apenas neste navegador.</p>
+  <div class="actions">
+    <a class="btn primary" href="{{ url_for('quiz') }}">Praticar questões</a>
+    <a class="btn" href="{{ url_for('flashcards') }}">Revisar cartões</a>
+  </div>
+</section>
+
+<section class="stats" id="stats" aria-label="Seu progresso">
+  <div class="stat"><span class="num" id="stat-answered">0</span><span>questões respondidas</span></div>
+  <div class="stat"><span class="num" id="stat-accuracy">–</span><span>de acerto</span></div>
+  <div class="stat"><span class="num" id="stat-read">0/{{ all_topics|length }}</span><span>tópicos lidos</span></div>
+  <div class="stat"><span class="num" id="stat-cards">0/{{ total_cards }}</span><span>cartões dominados</span></div>
+</section>
+
+<h2>Domínios</h2>
+<div class="grid">
+  {% for topic in all_topics %}
+  <a class="card topic-card" href="{{ url_for('topic_detail', slug=topic.slug) }}" data-topic="{{ topic.slug }}">
+    <span class="icon" aria-hidden="true">{{ topic.icon }}</span>
+    <h3>{{ topic.title }}</h3>
+    <p>{{ topic.summary }}</p>
+    <small>{{ counts[topic.slug].questions }} questões · {{ counts[topic.slug].cards }} cartões</small>
+    <span class="progress"><span class="bar" data-bar="{{ topic.slug }}"></span></span>
+    <small class="topic-status" data-status="{{ topic.slug }}">Sem tentativas ainda</small>
+  </a>
+  {% endfor %}
+</div>
+{% endblock %}
